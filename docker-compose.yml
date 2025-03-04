@@ -1,0 +1,75 @@
+# win mounts via CIFS
+#
+# volumes:
+#   downloads:
+#     driver: local
+#     driver_opts:
+#       type: cifs
+#       o: "username=faiyt,password=Bru8in2s##,uid=1000,gid=1000,vers=3.0,file_mode=0777,dir_mode=0777"
+#       device: "//192.168.0.101/download/downloads"
+#   movies:
+#     driver_opts:
+#       type: cifs
+#       o: "username=faiyt,password=Bru8in2s##,uid=1000,gid=1000,vers=3.0,file_mode=0777,dir_mode=0777"
+#       device: "//192.168.0.110/raid/movies"
+#   tv:
+#     driver_opts:
+#       type: cifs
+#       o: "username=faiyt,password=Bru8in2s##,uid=1000,gid=1000,vers=3.0,file_mode=0777,dir_mode=0777"
+#       device: "//192.168.0.110/raid/tv"
+#   music:
+#     driver_opts:
+#       type: cifs
+#       o: "username=faiyt,password=Bru8in2s##,uid=1000,gid=1000,vers=3.0,file_mode=0777,dir_mode=0777"
+#       device: "//192.168.0.101/download/music"
+#
+#
+# linux mounts via nfs
+volumes:
+  downloads:
+    driver: nfs
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.0.101,rw,soft,timeo=60"
+      device: ":mnt/downloads"
+  movies:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.0.110,rw,soft,timeo=60"
+      device: ":mnt/raid/movies"
+  tv:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.0.110,rw,soft,timeo=60"
+      device: ":mnt/raid/tv"
+  music:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.0.101,rw,soft,timeo=60"
+      device: ":mnt/downloads/music"
+
+services:
+  emby-scripts-app: # You can name your service according to your project
+    container_name: emby-scripts-app
+    build:
+      context: . # Docker context, referencing Dockerfile in the same directory
+    volumes:
+      - ./app-data:/app/logs # Maps 'logs' subdirectory inside the container to 'app-data' folder in your project directory
+      #      - ./app-config:/app/config  # You might need to adjust these according to actual use within your application
+      - ./src:/app/src
+      - ./config:/app/config
+      - downloads:/downloads
+      - movies:/movies
+      - tv:/tv
+      - music:/music
+    environment:
+      - PYTHONUNBUFFERED=1 # Set environment variables as needed
+      - SMB_USERNAME=${SMB_USERNAME}
+      - SMB_PASSWORD=${SMB_PASSWORD}
+    ports:
+      - "5000:5000" # Adjust as per the ports your application uses
+    restart: unless-stopped # Policy to restart the container
+
+    # Custom entrypoint and command, assuming your Dockerfile sets these up
+    entrypoint: /usr/local/bin/docker-entrypoint.sh
+    command: cron && tail -f /var/log/cron.log

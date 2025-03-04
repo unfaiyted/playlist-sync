@@ -1,0 +1,109 @@
+spotify:
+  client_id: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  client_secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  redirect_uri: "https://my.home-assistant.io/redirect/oauth"
+  scope: "playlist-read-private"
+
+emby:
+  url: "http://192.168.0.110:8096"
+  api_key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  user_id: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  username: "User"
+  password: "Password"
+  client: "SpotEmbySync"
+  device: "PC"
+  device_id: "emby_scripts_device"
+  version: "1.0.0"
+
+# Sonarr (Series)
+sonarr:
+  api_key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  url: "http://192.168.0.101:8989/api/v3"
+  match_threshold: 80 # Confidence for fuzzy finding logic
+
+# Radarr (Movies)
+radarr:
+  api_key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  url: "http://192.168.0.101:7878/api/v3"
+  match_threshold: 90 # Confidence for fuzzy finding logic
+
+# Lidarr (Music)
+lidarr:
+  api_key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  url: "http://192.168.0.101:8686"
+  match_threshold: 90 # Confidence for fuzzy finding logic
+  quality_profile_id: "1"
+  metadata_profile_id: "1"
+  monitor_new_items: "all" # 'all', 'none', 'new'
+  monitor_option: "all" # 'all', 'future', 'missing','none','latest', ...
+  search_for_missing_albums: true
+
+# Spotify
+spotdl:
+  path: "C:\\Users\\Name\\Downloads\\spotdl-4.2.5-win32.exe"
+  song_dir: "/downloads/spotdl_downloads"
+  organized_song_dir: "/downloads/org_spotdl_downloads"
+
+cron:
+  schedule: "0 2 * * *"
+
+navidrome:
+  url: "https://XXX.XXX.XXX.XXX"
+  username: "user"
+  password: "password"
+
+python:
+  path: "/app:$PYTHONPATH"
+
+smb:
+  username: "user"
+  password: "PASSWORD"
+
+genius:
+  client_id: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  client_secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  access_token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+music:
+  spotify_download_dir: "/downloads/spotdl_downloads"
+  spotify_organized_dir: "/downloads/org_spotdl_downloads"
+
+  # Where usenet and torrents will be downloaded
+  download_dir: "/downloads/music"
+  organized_dir: "/downloads/organized_music"
+
+  storage_dir: "/music"
+
+movies:
+  download_dir: "/downloads/movies"
+  organized_dir: "/downloads/ORG_Movies"
+  storage_dir: "/movies"
+
+tv:
+  download_dir: "/downloads/TV"
+  organized_dir: "/downloads/ORG_TV"
+  storage_dir: "/tv"
+
+features:
+  sync_spotify_playlists_to_emby: true
+  sync_spotify_playlists_to_navidrome: true
+
+  # Deletes duplicate playlists in Emby (same name)
+  delete_duplicate_emby_playlists: true
+  spotdl_find_unmatched_songs: true
+
+  # Movies downloaded files to organized folders
+  organize_downloaded_music: true
+  organize_downloaded_episodes: true
+  organize_downloaded_tv: true
+
+  # Moves organized files to final destination folders
+  move_org_movies_to_destination: true
+  move_org_music_to_destination: true
+  move_org_tv_to_destination: true
+  move_org_spotify_songs_to_destination: true
+
+  sort_downloaded_spotify_tracks: true
+  sort_downloaded_albums: true
+  copy_playlists_to_users: true
+
